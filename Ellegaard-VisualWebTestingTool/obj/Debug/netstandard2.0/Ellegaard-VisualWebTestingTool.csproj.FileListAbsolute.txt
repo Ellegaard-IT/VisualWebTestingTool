@@ -1,0 +1,7 @@
+C:\Speciale-reps\Ellegaard-VisualWebTestingTool\Ellegaard-VisualWebTestingTool\bin\Debug\netstandard2.0\Ellegaard-VisualWebTestingTool.deps.json
+C:\Speciale-reps\Ellegaard-VisualWebTestingTool\Ellegaard-VisualWebTestingTool\bin\Debug\netstandard2.0\Ellegaard-VisualWebTestingTool.dll
+C:\Speciale-reps\Ellegaard-VisualWebTestingTool\Ellegaard-VisualWebTestingTool\obj\Debug\netstandard2.0\Ellegaard-VisualWebTestingTool.AssemblyInfoInputs.cache
+C:\Speciale-reps\Ellegaard-VisualWebTestingTool\Ellegaard-VisualWebTestingTool\obj\Debug\netstandard2.0\Ellegaard-VisualWebTestingTool.AssemblyInfo.cs
+C:\Speciale-reps\Ellegaard-VisualWebTestingTool\Ellegaard-VisualWebTestingTool\bin\Debug\netstandard2.0\Ellegaard-VisualWebTestingTool.pdb
+C:\Speciale-reps\Ellegaard-VisualWebTestingTool\Ellegaard-VisualWebTestingTool\obj\Debug\netstandard2.0\Ellegaard-VisualWebTestingTool.dll
+C:\Speciale-reps\Ellegaard-VisualWebTestingTool\Ellegaard-VisualWebTestingTool\obj\Debug\netstandard2.0\Ellegaard-VisualWebTestingTool.pdb
