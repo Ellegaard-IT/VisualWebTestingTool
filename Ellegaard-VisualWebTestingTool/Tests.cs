@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Ellegaard_VisualWebTestingTool
 {
-    public class Tests
+    public class Test
     {
         public static void RunTest(IWebDriver driver)
         {
@@ -21,8 +21,8 @@ namespace Ellegaard_VisualWebTestingTool
 
         static void TakeScreenShot(IWebDriver driver)
         {
-            Screenshot screenshot = ((ITakesScreenshot)driver).GetScreenshot();
-            screenshot.SaveAsFile(driver.Url,ScreenshotImageFormat.Png);
+            Screenshot screenshot = ((ITakesScreenshot)driver).GetScreenshot();            
+            screenshot.SaveAsFile("Testname",ScreenshotImageFormat.Png);
         }
 
         static void LoadPage(IWebDriver driver)

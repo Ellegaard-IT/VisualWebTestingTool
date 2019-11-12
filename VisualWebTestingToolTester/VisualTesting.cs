@@ -3,6 +3,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ellegaard_VisualWebTestingTool;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Firefox;
+using System.Threading;
 
 namespace VisualWebTestingToolTester
 {
@@ -10,18 +12,19 @@ namespace VisualWebTestingToolTester
     public class VisualTesting
     {
         IWebDriver driver;
+        TestPreprocess testInitializer = new TestPreprocess();
 
         [TestInitialize]
         public void StartUp()
         {
-            driver = new ChromeDriver();
+            driver = new FirefoxDriver(Environment.CurrentDirectory);
         }
 
         [TestMethod]
         public void TestMethod1()
         {
             driver.Navigate().GoToUrl("https://wpsites.net/wordpress-tips/how-slow-page-loading-times-decrease-page-views/");
-            Tests.RunTest(driver);
+            Test.RunTest(driver);
         }
 
         [TestCleanup]
