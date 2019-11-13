@@ -12,8 +12,8 @@ namespace VisualWebTestingToolTester
     public class VisualTesting
     {
         IWebDriver driver;
-        TestPreprocess testInitializer = new TestPreprocess();
 
+        TestSectionPreprocess testInitializer = new TestSectionPreprocess("Test");
         [TestInitialize]
         public void StartUp()
         {
@@ -23,8 +23,9 @@ namespace VisualWebTestingToolTester
         [TestMethod]
         public void TestMethod1()
         {
+            
             driver.Navigate().GoToUrl("https://wpsites.net/wordpress-tips/how-slow-page-loading-times-decrease-page-views/");
-            Test.RunTest(driver);
+            Test.CreateTest(driver,testInitializer);
         }
 
         [TestCleanup]
