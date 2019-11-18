@@ -1,24 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Speciale-reps\\Ellegaard-VisualWebTestingTool\\Ellegaard-VisualWebTestingTool\\Ellegaard-VisualWebTestingTool.csproj": {}
+    "A:\\Reps\\Ellegaard-VisualWebTestingTool\\Ellegaard-VisualWebTestingTool\\Ellegaard-VisualWebTestingTool.csproj": {}
   },
   "projects": {
-    "C:\\Speciale-reps\\Ellegaard-VisualWebTestingTool\\Ellegaard-VisualWebTestingTool\\Ellegaard-VisualWebTestingTool.csproj": {
+    "A:\\Reps\\Ellegaard-VisualWebTestingTool\\Ellegaard-VisualWebTestingTool\\Ellegaard-VisualWebTestingTool.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Speciale-reps\\Ellegaard-VisualWebTestingTool\\Ellegaard-VisualWebTestingTool\\Ellegaard-VisualWebTestingTool.csproj",
+        "projectUniqueName": "A:\\Reps\\Ellegaard-VisualWebTestingTool\\Ellegaard-VisualWebTestingTool\\Ellegaard-VisualWebTestingTool.csproj",
         "projectName": "Ellegaard-VisualWebTestingTool",
-        "projectPath": "C:\\Speciale-reps\\Ellegaard-VisualWebTestingTool\\Ellegaard-VisualWebTestingTool\\Ellegaard-VisualWebTestingTool.csproj",
-        "packagesPath": "C:\\Users\\Sleeknote test\\.nuget\\packages\\",
-        "outputPath": "C:\\Speciale-reps\\Ellegaard-VisualWebTestingTool\\Ellegaard-VisualWebTestingTool\\obj\\",
+        "projectPath": "A:\\Reps\\Ellegaard-VisualWebTestingTool\\Ellegaard-VisualWebTestingTool\\Ellegaard-VisualWebTestingTool.csproj",
+        "packagesPath": "C:\\Users\\Morten\\.nuget\\packages\\",
+        "outputPath": "A:\\Reps\\Ellegaard-VisualWebTestingTool\\Ellegaard-VisualWebTestingTool\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
+          "C:\\Microsoft\\Xamarin\\NuGet\\",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Sleeknote test\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\Morten\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netstandard2.0"
@@ -53,16 +55,10 @@
             }
           },
           "imports": [
-            "net461",
-            "net462",
-            "net47",
-            "net471",
-            "net472",
-            "net48"
+            "net461"
           ],
           "assetTargetFallback": true,
-          "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
+          "warn": true
         }
       }
     }

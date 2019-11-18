@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Ellegaard_VisualWebTestingTool
 {
-    public class PrintOutResults
+    public partial class PrintOutResults
     {
+        List<string> testResults = new List<string>();
     }
 }

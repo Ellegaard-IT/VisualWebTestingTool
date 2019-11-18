@@ -5,11 +5,11 @@ using System.Text;
 
 namespace Ellegaard_VisualWebTestingTool
 {
-    public partial class Settings
+    public class Settings
     {
-        public static int AmountOfImagesForEachTest = 5;
-        public static int AmountOfSecTheImagesAreTakenOver = 3;
-        public static string TestDataSavePath = Environment.CurrentDirectory;
-        public static ScreenshotImageFormat ImagesFormat = ScreenshotImageFormat.Bmp;
+        public int AmountOfImagesForEachTest = 5;
+        public int AmountOfSecTheImagesAreTakenOver = 3;
+        public string TestDataSavePath = Environment.CurrentDirectory;
+        public ScreenshotImageFormat ImagesFormat = ScreenshotImageFormat.Bmp;
     }
 }
