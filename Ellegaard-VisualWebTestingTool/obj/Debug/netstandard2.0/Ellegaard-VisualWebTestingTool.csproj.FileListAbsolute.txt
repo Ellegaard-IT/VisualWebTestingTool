@@ -13,4 +13,3 @@ A:\Reps\Ellegaard-VisualWebTestingTool\Ellegaard-VisualWebTestingTool\obj\Debug\
 A:\Reps\Ellegaard-VisualWebTestingTool\Ellegaard-VisualWebTestingTool\obj\Debug\netstandard2.0\Ellegaard-VisualWebTestingTool.AssemblyInfo.cs
 A:\Reps\Ellegaard-VisualWebTestingTool\Ellegaard-VisualWebTestingTool\obj\Debug\netstandard2.0\Ellegaard-VisualWebTestingTool.dll
 A:\Reps\Ellegaard-VisualWebTestingTool\Ellegaard-VisualWebTestingTool\obj\Debug\netstandard2.0\Ellegaard-VisualWebTestingTool.pdb
-A:\Reps\Ellegaard-VisualWebTestingTool\Ellegaard-VisualWebTestingTool\obj\Debug\netstandard2.0\Ellegaard-VisualWebTestingTool.csprojAssemblyReference.cache

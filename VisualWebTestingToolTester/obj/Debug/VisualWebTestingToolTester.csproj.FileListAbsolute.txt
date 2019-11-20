@@ -19,7 +19,6 @@ A:\Reps\Ellegaard-VisualWebTestingTool\VisualWebTestingToolTester\bin\Debug\Micr
 A:\Reps\Ellegaard-VisualWebTestingTool\VisualWebTestingToolTester\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
 A:\Reps\Ellegaard-VisualWebTestingTool\VisualWebTestingToolTester\bin\Debug\VisualWebTestingToolTester.dll
 A:\Reps\Ellegaard-VisualWebTestingTool\VisualWebTestingToolTester\bin\Debug\VisualWebTestingToolTester.pdb
-A:\Reps\Ellegaard-VisualWebTestingTool\VisualWebTestingToolTester\bin\Debug\Ellegaard-VisualWebTestingTool.dll
 A:\Reps\Ellegaard-VisualWebTestingTool\VisualWebTestingToolTester\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.dll
 A:\Reps\Ellegaard-VisualWebTestingTool\VisualWebTestingToolTester\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll
 A:\Reps\Ellegaard-VisualWebTestingTool\VisualWebTestingToolTester\bin\Debug\WebDriver.dll
@@ -33,3 +32,4 @@ A:\Reps\Ellegaard-VisualWebTestingTool\VisualWebTestingToolTester\obj\Debug\Visu
 A:\Reps\Ellegaard-VisualWebTestingTool\VisualWebTestingToolTester\obj\Debug\VisualWebTestingToolTester.pdb
 A:\Reps\Ellegaard-VisualWebTestingTool\VisualWebTestingToolTester\obj\Debug\VisualWebTestingToolTester.csprojAssemblyReference.cache
 C:\Speciale-reps\Ellegaard-VisualWebTestingTool\VisualWebTestingToolTester\bin\Debug\Ellegaard-VisualWebTestingTool.dll
+A:\Reps\Ellegaard-VisualWebTestingTool\VisualWebTestingToolTester\bin\Debug\Ellegaard-VisualWebTestingTool.dll

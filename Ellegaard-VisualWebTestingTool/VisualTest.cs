@@ -44,8 +44,8 @@ namespace Ellegaard_VisualWebTestingTool
             }
             var imageBytesSavedImages = LoadTestImages(testName);
             LoadPage(driver);
-            ((ITakesScreenshot)driver).GetScreenshot().SaveAsFile(testSectionName+testName+"testImage",settings.ImagesFormat);
-            byte[] screenshot = File.ReadAllBytes(testSectionName + testName + "testImage");
+            ((ITakesScreenshot)driver).GetScreenshot().SaveAsFile(testSectionName+testName+ "\\WebImage\\CapturedWebImage", settings.ImagesFormat);
+            byte[] screenshot = File.ReadAllBytes(testSectionName + testName + "\\WebImage\\CapturedWebImage");
             CompareImages(screenshot, imageBytesSavedImages);
         }
 
@@ -71,6 +71,7 @@ namespace Ellegaard_VisualWebTestingTool
             }
 
             Directory.CreateDirectory(saveUrl);
+            Directory.CreateDirectory(saveUrl+"\\WebImage");
             foreach (var screenshot in screenshotList)
             {
                 screenshot.SaveAsFile(saveUrl + "\\" + testName + counter, settings.ImagesFormat);
@@ -96,18 +97,18 @@ namespace Ellegaard_VisualWebTestingTool
 
         #region LoadTestsIn
 
-        public List<byte[]> LoadTestImages(string testName)
+        public Dictionary<string, byte[]> LoadTestImages(string testName)
         {
             if (!Directory.Exists(testSectionName + testName))
             {
                 throw new Exception("Images cant be loaded, a directory by the name " + testName + " doesn't exist");
             }
             string saveUrl = testSectionName + testName;
-            List<byte[]> myImages = new List<byte[]>();
+            Dictionary<string,byte[]> myImages = new Dictionary<string, byte[]>();
 
             foreach (var image in Directory.GetFiles(saveUrl))
             {
-                myImages.Add(File.ReadAllBytes(image));
+                myImages.Add(image,File.ReadAllBytes(image));
             }
 
             return myImages;
@@ -120,32 +121,34 @@ namespace Ellegaard_VisualWebTestingTool
         {
             new WebDriverWait(driver, TimeSpan.FromSeconds(20)).Until(a => ((IJavaScriptExecutor)a).ExecuteScript("return document.readyState").Equals("complete"));
         }
-
-        public void ImageConvert()
-        {
-
-        }
         #endregion
 
         #region ImageComparison
 
-        public void CompareImages(byte[] siteImage, List<byte[]> localImages)
+        public void CompareImages(byte[] siteImage, Dictionary<string, byte[]> localImages)
         {
-            var totalCounter = (siteImage.Length + localImages[0].Length)/2;
+            ImageResults results = new ImageResults();
             var counter = 0;
-            var equal = 0;
+            var equals = 0;
+
             foreach (var imageBytes in localImages)
             {
-                foreach (var imageByte in imageBytes)
+                var totalCounter = (siteImage.Length + imageBytes.Value.Length) / 2;
+                foreach (var imageByte in imageBytes.Value)
                 {
-                    if (imageByte.Equals(siteImage[counter]))
-                    {
-                        equal++;
-                    }
+                    if (siteImage[counter].Equals(imageByte)){  equals++; }
                     counter++;
                 }
-                var procent = equal / totalCounter * 100;
+                counter = 0;
+                var procent = (equals / totalCounter) * 100;
+                //Fix denne bug
             }
+        }
+
+        struct ImageResults
+        {
+            public string TestName { get; set; }
+            //Dictionary<string, float> results = new Dictionary<string, float>();
         }
 
         #endregion
