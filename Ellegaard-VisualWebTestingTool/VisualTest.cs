@@ -9,14 +9,15 @@ using System.Threading;
 
 namespace Ellegaard_VisualWebTestingTool
 {
-    public class VisualTest : PrintOutResults
+    public class VisualTest
     {
+        string imageSavePath;
         string testSectionName;
         Settings settings;
-        List<string> logs = new List<string>();
 
         public VisualTest(string testSectionName, [Optional]Settings settings)
         {
+            this.testSectionName = testSectionName;
             this.settings = settings ?? new Settings();
             var testSection = new StringBuilder(this.settings.TestDataSavePath);
             
@@ -33,23 +34,21 @@ namespace Ellegaard_VisualWebTestingTool
             }
 
             testSection.Append("\\");
-            this.testSectionName = testSection.ToString();
+            this.imageSavePath = testSection.ToString();
         }
 
         public void RunTest(IWebDriver driver, string testName)
         {
-            if (!Directory.Exists(testSectionName+testName))
+            if (!Directory.Exists(imageSavePath+testName))
             {
+                PrintOutResults.Instance().logs.Add("" + testName + " didnt exist, a test case have bin created for future test cases in section "+testSectionName);
                 CreateTest(testName,driver);
             }
             var imageBytesSavedImages = LoadTestImages(testName);
             LoadPage(driver);
-            ((ITakesScreenshot)driver).GetScreenshot().SaveAsFile(testSectionName+testName+ "\\WebImage\\CapturedWebImage", settings.ImagesFormat);
-            byte[] screenshot = File.ReadAllBytes(testSectionName + testName + "\\WebImage\\CapturedWebImage");
-            CompareImages(screenshot, imageBytesSavedImages);
+            byte[] screenshotBytes = CaptureDriverWebImage(driver,testName);
+            CompareImages(screenshotBytes, imageBytesSavedImages, testName);
         }
-
-        
 
         #region CreateTests
         void CreateTest(string testName, IWebDriver driver)
@@ -61,7 +60,7 @@ namespace Ellegaard_VisualWebTestingTool
 
         void CreateTestDirectory(string testName, List<Screenshot> screenshotList)
         {
-            string saveUrl = testSectionName + testName;
+            string saveUrl = imageSavePath + testName;
             int counter = 1;
             if (Directory.Exists(saveUrl))
             {
@@ -99,11 +98,11 @@ namespace Ellegaard_VisualWebTestingTool
 
         public Dictionary<string, byte[]> LoadTestImages(string testName)
         {
-            if (!Directory.Exists(testSectionName + testName))
+            if (!Directory.Exists(imageSavePath + testName))
             {
                 throw new Exception("Images cant be loaded, a directory by the name " + testName + " doesn't exist");
             }
-            string saveUrl = testSectionName + testName;
+            string saveUrl = imageSavePath + testName;
             Dictionary<string,byte[]> myImages = new Dictionary<string, byte[]>();
 
             foreach (var image in Directory.GetFiles(saveUrl))
@@ -116,41 +115,52 @@ namespace Ellegaard_VisualWebTestingTool
 
         #endregion
 
+        #region CaptureWebImage
+
+        public byte[] CaptureDriverWebImage(IWebDriver driver, string testName)
+        {
+            ((ITakesScreenshot)driver).GetScreenshot().SaveAsFile(imageSavePath + testName + "\\WebImage\\CapturedWebImage", settings.ImagesFormat);
+            byte[] screenshot = File.ReadAllBytes(imageSavePath + testName + "\\WebImage\\CapturedWebImage");
+            return screenshot;
+        }
+
+        #endregion
+        
+        #region ImageComparison
+
+        void CompareImages(byte[] siteImage, Dictionary<string, byte[]> localImages, string testName)
+        {
+            ImageResults results = new ImageResults();            
+            results.testResults = new Dictionary<string, float>();
+            results.testName = testName;
+            results.testSectionName = testSectionName;
+
+            foreach (var imageBytes in localImages)
+            {
+                float totalCounter = (siteImage.Length + imageBytes.Value.Length) / 2;
+                int counter = 0;
+                var equals = 0;
+                foreach (var imageByte in imageBytes.Value)
+                {
+                    if (siteImage[counter].Equals(imageByte))   { equals++; }
+                    else{ siteImage[counter] = 0; }
+                    counter++;
+                }
+                counter = 0;
+                float procent = (equals / totalCounter) * 100;
+                results.testResults.Add(imageBytes.Key, procent);
+                results.showPictureDifferencesInBytes = siteImage;
+            }
+            PrintOutResults.Instance().testResults.Add(results);
+        }
+
+        #endregion
+
         #region General Methods
         static void LoadPage(IWebDriver driver)
         {
             new WebDriverWait(driver, TimeSpan.FromSeconds(20)).Until(a => ((IJavaScriptExecutor)a).ExecuteScript("return document.readyState").Equals("complete"));
         }
-        #endregion
-
-        #region ImageComparison
-
-        public void CompareImages(byte[] siteImage, Dictionary<string, byte[]> localImages)
-        {
-            ImageResults results = new ImageResults();
-            var counter = 0;
-            var equals = 0;
-
-            foreach (var imageBytes in localImages)
-            {
-                var totalCounter = (siteImage.Length + imageBytes.Value.Length) / 2;
-                foreach (var imageByte in imageBytes.Value)
-                {
-                    if (siteImage[counter].Equals(imageByte)){  equals++; }
-                    counter++;
-                }
-                counter = 0;
-                var procent = (equals / totalCounter) * 100;
-                //Fix denne bug
-            }
-        }
-
-        struct ImageResults
-        {
-            public string TestName { get; set; }
-            //Dictionary<string, float> results = new Dictionary<string, float>();
-        }
-
         #endregion
     }
 }
