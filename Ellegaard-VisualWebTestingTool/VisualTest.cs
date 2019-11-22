@@ -105,9 +105,11 @@ namespace Ellegaard_VisualWebTestingTool
             string saveUrl = imageSavePath + testName;
             Dictionary<string,byte[]> myImages = new Dictionary<string, byte[]>();
 
+            var counter = 0;
             foreach (var image in Directory.GetFiles(saveUrl))
             {
-                myImages.Add(image,File.ReadAllBytes(image));
+                counter++;
+                myImages.Add(testName+counter,File.ReadAllBytes(image));
             }
 
             return myImages;

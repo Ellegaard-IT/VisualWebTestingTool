@@ -26,7 +26,6 @@ A:\Reps\Ellegaard-VisualWebTestingTool\VisualWebTestingToolTester\bin\Debug\Elle
 A:\Reps\Ellegaard-VisualWebTestingTool\VisualWebTestingToolTester\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.xml
 A:\Reps\Ellegaard-VisualWebTestingTool\VisualWebTestingToolTester\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.xml
 A:\Reps\Ellegaard-VisualWebTestingTool\VisualWebTestingToolTester\bin\Debug\WebDriver.xml
-A:\Reps\Ellegaard-VisualWebTestingTool\VisualWebTestingToolTester\obj\Debug\VisualWebTestingToolTester.csproj.CoreCompileInputs.cache
 A:\Reps\Ellegaard-VisualWebTestingTool\VisualWebTestingToolTester\obj\Debug\VisualWebTestingToolTester.csproj.CopyComplete
 A:\Reps\Ellegaard-VisualWebTestingTool\VisualWebTestingToolTester\obj\Debug\VisualWebTestingToolTester.dll
 A:\Reps\Ellegaard-VisualWebTestingTool\VisualWebTestingToolTester\obj\Debug\VisualWebTestingToolTester.pdb

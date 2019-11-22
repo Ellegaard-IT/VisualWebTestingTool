@@ -11,5 +11,7 @@ namespace Ellegaard_VisualWebTestingTool
         public int AmountOfSecTheImagesAreTakenOver = 3;
         public string TestDataSavePath = Environment.CurrentDirectory;
         public ScreenshotImageFormat ImagesFormat = ScreenshotImageFormat.Bmp;
+
+        public string ResultXmlSavePath = Environment.CurrentDirectory;
     }
 }
