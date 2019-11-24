@@ -1,11 +1,18 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<TestResults>
+<VisualTestResults>
   <TestSection>
     <myTestImages />
-    <myTestImages1>procent difference:100</myTestImages1>
-    <myTestImages2>procent difference:100</myTestImages2>
-    <myTestImages3>procent difference:100</myTestImages3>
-    <myTestImages4>procent difference:100</myTestImages4>
-    <myTestImages5>procent difference:99,98478</myTestImages5>
+    <myTestImages1>procent difference:99,99584</myTestImages1>
+    <myTestImages2>procent difference:99,99584</myTestImages2>
+    <myTestImages3>procent difference:99,99584</myTestImages3>
+    <myTestImages4>procent difference:99,99584</myTestImages4>
+    <myTestImages5>procent difference:99,98063</myTestImages5>
   </TestSection>
-</TestResults>
+  <TestSection>
+    <theirTestImages />
+    <theirTestImages1>procent difference:99,99584</theirTestImages1>
+    <theirTestImages2>procent difference:99,98158</theirTestImages2>
+    <theirTestImages3>procent difference:99,97854</theirTestImages3>
+    <theirTestImages4>procent difference:99,97854</theirTestImages4>
+    <theirTestImages5>procent difference:99,97854</theirTestImages5>
+  </TestSection><Test2><hisTestImages /><hisTestImages1>procent difference:99,99584</hisTestImages1><hisTestImages2>procent difference:99,99584</hisTestImages2><hisTestImages3>procent difference:99,97731</hisTestImages3><hisTestImages4>procent difference:99,97731</hisTestImages4><hisTestImages5>procent difference:99,97731</hisTestImages5></Test2><TestSectionInClass2><myTestImagesInClass2 /><myTestImagesInClass21>procent difference:100</myTestImagesInClass21><myTestImagesInClass22>procent difference:100</myTestImagesInClass22><myTestImagesInClass23>procent difference:100</myTestImagesInClass23><myTestImagesInClass24>procent difference:100</myTestImagesInClass24><myTestImagesInClass25>procent difference:99,98483</myTestImagesInClass25></TestSectionInClass2><TestSectionInClass2><theirTestImagesInClass2 /><theirTestImagesInClass21>procent difference:99,99368</theirTestImagesInClass21><theirTestImagesInClass22>procent difference:99,99368</theirTestImagesInClass22><theirTestImagesInClass23>procent difference:99,99368</theirTestImagesInClass23><theirTestImagesInClass24>procent difference:99,99368</theirTestImagesInClass24><theirTestImagesInClass25>procent difference:99,9819</theirTestImagesInClass25></TestSectionInClass2><Test2InClass2><hisTestImagesInClass2 /><hisTestImagesInClass21>procent difference:100</hisTestImagesInClass21><hisTestImagesInClass22>procent difference:99,9855</hisTestImagesInClass22><hisTestImagesInClass23>procent difference:99,98222</hisTestImagesInClass23><hisTestImagesInClass24>procent difference:99,98222</hisTestImagesInClass24><hisTestImagesInClass25>procent difference:99,98222</hisTestImagesInClass25></Test2InClass2></VisualTestResults>

@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="VisualTesting.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VisualTesting2.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

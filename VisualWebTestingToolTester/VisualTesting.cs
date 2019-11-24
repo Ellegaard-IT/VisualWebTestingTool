@@ -25,9 +25,10 @@ namespace VisualWebTestingToolTester
             driver.Navigate().GoToUrl("https://wpsites.net/wordpress-tips/how-slow-page-loading-times-decrease-page-views/");
             VisualTest test = new VisualTest("TestSection");
             test.RunTest(driver,"myTestImages");
-            test.RunTest(driver, "theirTestImages");
             VisualTest test2 = new VisualTest("Test2");
             test2.RunTest(driver, "hisTestImages");
+            test.RunTest(driver, "theirTestImages");
+            
             PrintOutResults.Instance().PrintToXML();
         }
 

@@ -12,6 +12,17 @@ namespace Ellegaard_VisualWebTestingTool
         public string TestDataSavePath = Environment.CurrentDirectory;
         public ScreenshotImageFormat ImagesFormat = ScreenshotImageFormat.Bmp;
 
+
+        /// <summary>
+        /// PrintOutResults Settings
+        /// </summary>
         public string ResultXmlSavePath = Environment.CurrentDirectory;
+
+        /// <summary>
+        /// Only show images that is compared within a specified range in procent
+        /// </summary>
+        public bool OnlyShowImagesBelowTheSetProcentValue = false;
+        public bool OnlyShowImagesHigherThenTheSetProcentValue = false;
+        public float ImagesProcentDifference = 95;
     }
 }
