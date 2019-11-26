@@ -13,10 +13,17 @@ namespace Ellegaard_VisualWebTestingTool
         public ScreenshotImageFormat ImagesFormat = ScreenshotImageFormat.Bmp;
 
 
+
         /// <summary>
         /// PrintOutResults Settings
         /// </summary>
+        //Xml settings
         public string ResultXmlSavePath = Environment.CurrentDirectory;
+
+        //Mail settings
+        public bool IncludeXmlFileInMail = false;
+        public string MailSubject = "VisualTestResultMail";
+
 
         /// <summary>
         /// Only show images that is compared within a specified range in procent

@@ -5,6 +5,8 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using System.Threading;
+using System.Net.Mail;
+using System.Net;
 
 namespace VisualWebTestingToolTester
 {
@@ -29,6 +31,7 @@ namespace VisualWebTestingToolTester
             test2.RunTest(driver, "hisTestImages");
             test.RunTest(driver, "theirTestImages");
             
+
             PrintOutResults.Instance().PrintToXML();
         }
 
@@ -36,6 +39,21 @@ namespace VisualWebTestingToolTester
         public void ShutDown()
         {
             driver.Close();
+        }
+
+
+
+
+        public void MailTest()
+        {
+            var credentials = new NetworkCredential();
+            credentials.UserName = "donotrply@ellegaard-it.com";
+            credentials.Password = "T6iM2KCX9RaKYwv";
+
+            SmtpClient smtp = new SmtpClient("asmtp.unoeuro.com", 25);
+            smtp.Credentials = credentials;
+            smtp.EnableSsl = true;
+            smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
         }
     }
 }
