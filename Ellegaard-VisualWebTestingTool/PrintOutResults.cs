@@ -91,8 +91,8 @@ namespace Ellegaard_VisualWebTestingTool
             if (settings == null) settings = new Settings();
             if (File.Exists(savepath) && settings.IncludeXmlFileInMail) { PrintToXML(settings); mailAttachment = new Attachment(savepath); }
             else TestResultsSort(settings);
-            string mailBody = "";
-            CreateMailBody();
+            string mailBody = CreateMailBody();
+
 
 
 
@@ -105,6 +105,7 @@ namespace Ellegaard_VisualWebTestingTool
                 if (mailAttachment != null && settings.IncludeXmlFileInMail) message.Attachments.Add(mailAttachment);
                 message.Subject = settings.MailSubject;                
                 message.Body = mailBody;
+                message.IsBodyHtml = true;
                 client.Send(message);
             }
         }
@@ -151,25 +152,35 @@ namespace Ellegaard_VisualWebTestingTool
 
         string CreateMailBody()
         {
-            var xDocument = new XDocument(
-                new XDocumentType("html",null,null,null),
-                new XElement("html",
-                    new XElement("head"),
-                    new XElement("body",
-                        new XElement("p",
-                            "This is a paragraf"),
-                        new XElement("p",
-                            "this is another paragraf"
-                            )
-                        )
-                    )
-                );
+            var prevSectionName = testResults[0].testSectionName;
+            XElement sectionName = new XElement("p","Testsection: "+testResults[0].testSectionName);
+            var myDocument = new XDocument(new XDocumentType("html", null, null, null));
+            var htmlTag = new XElement("html");
+            myDocument.Add(htmlTag);
+                var header = new XElement("head");
+                var body = new XElement("body");
+                htmlTag.Add(header);
+                htmlTag.Add(body);
+            
+            foreach (var result in testResults)
+            {
+                if (prevSectionName != result.testSectionName) prevSectionName = result.testSectionName; sectionName = new XElement("p","Testsection: " + result.testSectionName); body.Add(sectionName);
+                var testCase = new XElement("p","Test: "+ result.testName);
+                sectionName.Add(testCase);
+                foreach (var image in result.testResults)
+                {
+                    var test = new XElement("p",image.Key+": "+image.Value);
+                    testCase.Add(test);
+                }
+            }
+
+
 
             var settings = new XmlWriterSettings { OmitXmlDeclaration = true, Indent = true, IndentChars = "\t" };
-            var a = xDocument.ToString();
+            var a = myDocument.ToString();
 
 
-            return null;
+            return a;
         }
     }
     struct ImageResults

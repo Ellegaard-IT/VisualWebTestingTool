@@ -2,27 +2,27 @@
 <VisualTestResults>
   <TestSection>
     <myTestImages>
-      <myTestImages1>procent difference:99,99625</myTestImages1>
-      <myTestImages2>procent difference:99,99625</myTestImages2>
-      <myTestImages3>procent difference:99,99625</myTestImages3>
-      <myTestImages4>procent difference:99,99625</myTestImages4>
-      <myTestImages5>procent difference:99,98103</myTestImages5>
+      <myTestImages1>procent difference:99,98894</myTestImages1>
+      <myTestImages2>procent difference:99,98894</myTestImages2>
+      <myTestImages3>procent difference:99,98894</myTestImages3>
+      <myTestImages4>procent difference:99,98894</myTestImages4>
+      <myTestImages5>procent difference:99,97794</myTestImages5>
     </myTestImages>
     <theirTestImages>
-      <theirTestImages1>procent difference:99,99625</theirTestImages1>
-      <theirTestImages2>procent difference:99,98199</theirTestImages2>
-      <theirTestImages3>procent difference:99,97895</theirTestImages3>
-      <theirTestImages4>procent difference:99,97895</theirTestImages4>
-      <theirTestImages5>procent difference:99,97895</theirTestImages5>
+      <theirTestImages1>procent difference:99,99632</theirTestImages1>
+      <theirTestImages2>procent difference:99,98205</theirTestImages2>
+      <theirTestImages3>procent difference:99,97901</theirTestImages3>
+      <theirTestImages4>procent difference:99,97901</theirTestImages4>
+      <theirTestImages5>procent difference:99,97901</theirTestImages5>
     </theirTestImages>
   </TestSection>
   <Test2>
     <hisTestImages>
-      <hisTestImages1>procent difference:99,99625</hisTestImages1>
-      <hisTestImages2>procent difference:99,99625</hisTestImages2>
-      <hisTestImages3>procent difference:99,97772</hisTestImages3>
-      <hisTestImages4>procent difference:99,97772</hisTestImages4>
-      <hisTestImages5>procent difference:99,97772</hisTestImages5>
+      <hisTestImages1>procent difference:99,99632</hisTestImages1>
+      <hisTestImages2>procent difference:99,99632</hisTestImages2>
+      <hisTestImages3>procent difference:99,97778</hisTestImages3>
+      <hisTestImages4>procent difference:99,97778</hisTestImages4>
+      <hisTestImages5>procent difference:99,97778</hisTestImages5>
     </hisTestImages>
   </Test2>
 </VisualTestResults>

@@ -24,12 +24,12 @@ namespace VisualWebTestingToolTester
         [TestMethod]
         public void TestMethod1()
         {
-            //driver.Navigate().GoToUrl("https://wpsites.net/wordpress-tips/how-slow-page-loading-times-decrease-page-views/");
-            //VisualTest test = new VisualTest("TestSectionInClass2");
-            //test.RunTest(driver, "myTestImagesInClass2");
-            //VisualTest test2 = new VisualTest("Test2InClass2");
-            //test2.RunTest(driver, "hisTestImagesInClass2");
-            //test.RunTest(driver, "theirTestImagesInClass2");
+            driver.Navigate().GoToUrl("https://wpsites.net/wordpress-tips/how-slow-page-loading-times-decrease-page-views/");
+            VisualTest test = new VisualTest("TestSectionInClass2");
+            test.RunTest(driver, "myTestImagesInClass2");
+            VisualTest test2 = new VisualTest("Test2InClass2");
+            test2.RunTest(driver, "hisTestImagesInClass2");
+            test.RunTest(driver, "theirTestImagesInClass2");
 
             //PrintOutResults.Instance().PrintToXML();
             var a = new string[] { "Morten_hansen51@yahoo.dk" };
