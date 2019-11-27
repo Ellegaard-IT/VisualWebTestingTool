@@ -30,10 +30,10 @@ namespace VisualWebTestingToolTester
             VisualTest test2 = new VisualTest("Test2InClass2");
             test2.RunTest(driver, "hisTestImagesInClass2");
             test.RunTest(driver, "theirTestImagesInClass2");
-
-            //PrintOutResults.Instance().PrintToXML();
+            Settings settings = new Settings();
+            settings.IncludeXmlFileInMail = true;
             var a = new string[] { "Morten_hansen51@yahoo.dk" };
-            PrintOutResults.Instance().SendResultsAsEmail(MailTest(),a,"VisualTestingTool@ellegaard-it.com") ;
+            PrintOutResults.Instance().SendResultsAsEmail(MailTest(),a,"VisualTestingTool@ellegaard-it.com", "Er stort set færdig med biblioteket, måtte skrive mail html koden i linq, vil gerne have billeder i mailen som viser hvor på billederne forskellen er men har ikke lavet metoden for det endnu. Men indtil videre ser det sådan her ud", settings) ;
         }
 
         [TestCleanup]

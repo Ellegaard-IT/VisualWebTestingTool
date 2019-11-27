@@ -30,9 +30,6 @@ namespace VisualWebTestingToolTester
             VisualTest test2 = new VisualTest("Test2");
             test2.RunTest(driver, "hisTestImages");
             test.RunTest(driver, "theirTestImages");
-            
-
-            PrintOutResults.Instance().PrintToXML();
         }
 
         [TestCleanup]

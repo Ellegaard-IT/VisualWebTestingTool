@@ -48,7 +48,9 @@ namespace Ellegaard_VisualWebTestingTool
             #region SaveXmlPath
             savepath = settings.ResultXmlSavePath + "\\XmlTestResult";
             if (!Directory.Exists(savepath)){ Directory.CreateDirectory(savepath); }
-            xmlDocument.Save(savepath+"\\TestResultXmlDocument.xml");
+            savepath += "\\TestResultXmlDocument.xml";
+            xmlDocument.Save(savepath);
+            
             #endregion
         }
         private XmlDocument CreateXmlElements()
@@ -85,17 +87,13 @@ namespace Ellegaard_VisualWebTestingTool
             return doc;
         }
 
-        public void SendResultsAsEmail(SmtpClient client, string[] mailTo, string mailFrom,[Optional]Settings settings)
+        public void SendResultsAsEmail(SmtpClient client, string[] mailTo, string mailFrom,[Optional]string subject,[Optional]Settings settings)
         {
             Attachment mailAttachment=null;
             if (settings == null) settings = new Settings();
-            if (File.Exists(savepath) && settings.IncludeXmlFileInMail) { PrintToXML(settings); mailAttachment = new Attachment(savepath); }
+            if (settings.IncludeXmlFileInMail) { PrintToXML(settings); mailAttachment = new Attachment(savepath); }
             else TestResultsSort(settings);
             string mailBody = CreateMailBody();
-
-
-
-
 
             foreach (var mail in mailTo)
             {
@@ -103,7 +101,7 @@ namespace Ellegaard_VisualWebTestingTool
                 MailAddress addressTo = new MailAddress(mail);
                 MailMessage message = new MailMessage(addressFrom, addressTo);
                 if (mailAttachment != null && settings.IncludeXmlFileInMail) message.Attachments.Add(mailAttachment);
-                message.Subject = settings.MailSubject;                
+                message.Subject = subject??settings.MailSubject;                
                 message.Body = mailBody;
                 message.IsBodyHtml = true;
                 client.Send(message);
@@ -152,8 +150,6 @@ namespace Ellegaard_VisualWebTestingTool
 
         string CreateMailBody()
         {
-            var prevSectionName = testResults[0].testSectionName;
-            XElement sectionName = new XElement("p","Testsection: "+testResults[0].testSectionName);
             var myDocument = new XDocument(new XDocumentType("html", null, null, null));
             var htmlTag = new XElement("html");
             myDocument.Add(htmlTag);
@@ -162,25 +158,35 @@ namespace Ellegaard_VisualWebTestingTool
                 htmlTag.Add(header);
                 htmlTag.Add(body);
             
+            //Body HTML
             foreach (var result in testResults)
             {
-                if (prevSectionName != result.testSectionName) prevSectionName = result.testSectionName; sectionName = new XElement("p","Testsection: " + result.testSectionName); body.Add(sectionName);
-                var testCase = new XElement("p","Test: "+ result.testName);
-                sectionName.Add(testCase);
+                var testSectionName = result.testSectionName;
+                var testName = result.testName;
+                var htmlTable = new XElement("table", new XAttribute("style", "width:100%;"));
+                body.Add(htmlTable);
+                var headerWidth = new XAttribute("style", "width:25%");
+                var htmlTableRowHeadline = new XElement("tr",
+                    new XElement("th", "SectionName", new XAttribute("style", "width:25%")),
+                    new XElement("th", "TestName", new XAttribute("style", "width:25%")),
+                    new XElement("th", "ImageName", new XAttribute("style", "width:25%")),
+                    new XElement("th", "ProcentImageDifference", new XAttribute("style", "width:25%")));
+                htmlTable.Add(htmlTableRowHeadline);
+
                 foreach (var image in result.testResults)
                 {
-                    var test = new XElement("p",image.Key+": "+image.Value);
-                    testCase.Add(test);
+
+                    var htmlTableRowData = new XElement("tr",
+                        new XElement("td", testSectionName),
+                        new XElement("td", testName),
+                        new XElement("td", image.Key),
+                        new XElement("td", image.Value));
+                    htmlTable.Add(htmlTableRowData);
+                    testSectionName = "";
+                    testName = "";
                 }
             }
-
-
-
-            var settings = new XmlWriterSettings { OmitXmlDeclaration = true, Indent = true, IndentChars = "\t" };
-            var a = myDocument.ToString();
-
-
-            return a;
+            return myDocument.ToString();
         }
     }
     struct ImageResults
