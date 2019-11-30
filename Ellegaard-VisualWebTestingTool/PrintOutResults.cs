@@ -26,7 +26,7 @@ namespace Ellegaard_VisualWebTestingTool
 
         internal List<string> logs = new List<string>();
         internal List<ImageResults> testResults = new List<ImageResults>();
-        private List<ImageResults> myTest = new List<ImageResults>();
+        
         string savepath;
 
         public int GetResultCount()
@@ -41,8 +41,10 @@ namespace Ellegaard_VisualWebTestingTool
         public void PrintToXML([Optional]Settings settings)
         {
             if (settings == null) { settings = new Settings(); }
-
             TestResultsSort(settings);
+            if (settings.CreateImageShowingDifferencePixelPoints) CreateShowDifferenceByteImage(settings);
+
+            
             var xmlDocument = CreateXmlElements();
 
             #region SaveXmlPath
@@ -89,10 +91,19 @@ namespace Ellegaard_VisualWebTestingTool
 
         public void SendResultsAsEmail(SmtpClient client, string[] mailTo, string mailFrom,[Optional]string subject,[Optional]Settings settings)
         {
-            Attachment mailAttachment=null;
+            List<Attachment> mailAttachment = new List<Attachment>();             
             if (settings == null) settings = new Settings();
-            if (settings.IncludeXmlFileInMail) { PrintToXML(settings); mailAttachment = new Attachment(savepath); }
-            else TestResultsSort(settings);
+            TestResultsSort(settings);
+            if (settings.CreateImageShowingDifferencePixelPoints) CreateShowDifferenceByteImage(settings);
+            if (settings.IncludeXmlFileInMail) { PrintToXML(settings); mailAttachment.Add(new Attachment(savepath)); }
+            if (Directory.Exists(settings.ShowImageDifferencePointsImageDir + "\\TestDifferenceImages") && settings.InsertImageInMail && settings.CreateImageShowingDifferencePixelPoints)
+            {
+                var images = Directory.GetFiles(settings.ShowImageDifferencePointsImageDir + "\\TestDifferenceImages\\");
+                foreach (var item in images)
+                {
+                    mailAttachment.Add(new Attachment(item));
+                }
+            }
             string mailBody = CreateMailBody();
 
             foreach (var mail in mailTo)
@@ -100,42 +111,54 @@ namespace Ellegaard_VisualWebTestingTool
                 MailAddress addressFrom = new MailAddress(mailFrom);
                 MailAddress addressTo = new MailAddress(mail);
                 MailMessage message = new MailMessage(addressFrom, addressTo);
-                if (mailAttachment != null && settings.IncludeXmlFileInMail) message.Attachments.Add(mailAttachment);
+                mailAttachment.ForEach(a=>message.Attachments.Add(a));
                 message.Subject = subject??settings.MailSubject;                
                 message.Body = mailBody;
                 message.IsBodyHtml = true;
                 client.Send(message);
             }
         }
-
+        
         void TestResultsSort(Settings settings)
         {
             #region Remove images outside a specified procent range
-            foreach (var result in testResults)
+            List<ImageResults> myTest = new List<ImageResults>();
+            
+            
+            for (int i = 0; i < testResults.Count; i++)
             {
-                if (settings.OnlyShowImagesBelowTheSetProcentValue==true && settings.OnlyShowImagesHigherThenTheSetProcentValue==false)
+                var shortWhileList = new List<string>();
+                var myTestResults = testResults[i].testResults;
+                if (settings.OnlyShowImagesBelowTheSetProcentValue == true && settings.OnlyShowImagesHigherThenTheSetProcentValue == false)
                 {
-                    foreach (var item in result.testResults)
+                    foreach (var result in myTestResults)
                     {
-                        if (item.Value < settings.ImagesProcentDifference)
+                        if (result.Value >= settings.ImagesProcentDifference)
                         {
-                            result.testResults.Remove(item.Key);
+                            shortWhileList.Add(result.Key);
                         }
+                    }
+                    foreach (var item in shortWhileList)
+                    {
+                        myTestResults.Remove(item);
                     }
                 }
                 else if (settings.OnlyShowImagesBelowTheSetProcentValue == false && settings.OnlyShowImagesHigherThenTheSetProcentValue == true)
                 {
-                    foreach (var item in result.testResults)
+                    foreach (var result in myTestResults)
                     {
-                        if (item.Value > settings.ImagesProcentDifference)
+                        if (result.Value <= settings.ImagesProcentDifference)
                         {
-                            result.testResults.Remove(item.Key);
+                            shortWhileList.Add(result.Key);
                         }
+                    }
+                    foreach (var item in shortWhileList)
+                    {
+                        myTestResults.Remove(item);
                     }
                 }
             }
-            #endregion
-
+            #endregion            
             testResults.ForEach(a => myTest.Add(a));
             testResults.Clear();
             while (myTest.Count != 0)
@@ -161,11 +184,12 @@ namespace Ellegaard_VisualWebTestingTool
             //Body HTML
             foreach (var result in testResults)
             {
+                if (result.testResults.Count==0){continue;}
                 var testSectionName = result.testSectionName;
                 var testName = result.testName;
                 var htmlTable = new XElement("table", new XAttribute("style", "width:100%;"));
                 body.Add(htmlTable);
-                var headerWidth = new XAttribute("style", "width:25%");
+                var headerWidth = new XAttribute("style", "width:20%");
                 var htmlTableRowHeadline = new XElement("tr",
                     new XElement("th", "SectionName", new XAttribute("style", "width:25%")),
                     new XElement("th", "TestName", new XAttribute("style", "width:25%")),
@@ -175,12 +199,12 @@ namespace Ellegaard_VisualWebTestingTool
 
                 foreach (var image in result.testResults)
                 {
-
-                    var htmlTableRowData = new XElement("tr",
-                        new XElement("td", testSectionName),
-                        new XElement("td", testName),
-                        new XElement("td", image.Key),
-                        new XElement("td", image.Value));
+                    XElement htmlTableRowData = new XElement("tr",
+                            new XElement("td", testSectionName),
+                            new XElement("td", testName),
+                            new XElement("td", image.Key),
+                            new XElement("td", image.Value));
+                    
                     htmlTable.Add(htmlTableRowData);
                     testSectionName = "";
                     testName = "";
@@ -188,12 +212,49 @@ namespace Ellegaard_VisualWebTestingTool
             }
             return myDocument.ToString();
         }
+
+        void CreateShowDifferenceByteImage(Settings settings)
+        {
+            if (Directory.Exists(settings.ShowImageDifferencePointsImageDir + "\\TestDifferenceImages")) Directory.Delete(settings.ShowImageDifferencePointsImageDir + "\\TestDifferenceImages", true);
+            for (int i = 0; i < testResults.Count; i++)
+            {
+                if (testResults[i].testResults.Count == 0) continue;
+                string lowestImageProcentDifferenceName = "";
+                float lowestImageProcentDifference=0;
+
+                foreach (var item in testResults[i].testResults)
+                {
+                    if (lowestImageProcentDifference < item.Value)
+                    {
+                        lowestImageProcentDifferenceName = item.Key;
+                        lowestImageProcentDifference = item.Value;
+                    }
+                }
+                var localFile = File.ReadAllBytes(settings.TestDataSavePath+"\\VisualImageTestData\\" + testResults[i].testSectionName + "\\"+ testResults[i].testName+"\\"+ lowestImageProcentDifferenceName);
+                var webScreenFile = File.ReadAllBytes(settings.TestDataSavePath + "\\VisualImageTestData\\" + testResults[i].testSectionName + "\\" + testResults[i].testName + "\\WebImage\\CapturedWebImage.bmp");
+
+                var redColors = new List<int>();
+                for (int x = 36; x < webScreenFile.Length; x+=4) {  redColors.Add(x);  }
+
+                for (int y = 34; y < webScreenFile.Length; y++)
+                {
+                    if(webScreenFile[y] != localFile[y] && redColors.Contains(y))
+                    {
+                        webScreenFile[y-2] = 0; /*Blue*/
+                        webScreenFile[y-1] = 0; /*Green*/
+                        webScreenFile[y] = 255; /*Red*/
+                        webScreenFile[y+1] = 0; /*Transparent*/
+                    }                    
+                }
+                if (!Directory.Exists(settings.ShowImageDifferencePointsImageDir + "\\TestDifferenceImages")) Directory.CreateDirectory(settings.ShowImageDifferencePointsImageDir + "\\TestDifferenceImages");
+                File.WriteAllBytes(settings.ShowImageDifferencePointsImageDir + "\\TestDifferenceImages\\"+testResults[i].testName+".bmp", webScreenFile);
+            }
+        }
     }
     struct ImageResults
     {
         public string testSectionName { get; set; }
         public string testName { get; set; }
         public Dictionary<string, float> testResults;
-        public byte[] showPictureDifferencesInBytes;
     }
 }

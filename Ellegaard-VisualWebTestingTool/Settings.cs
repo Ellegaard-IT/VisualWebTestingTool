@@ -24,12 +24,16 @@ namespace Ellegaard_VisualWebTestingTool
         public bool IncludeXmlFileInMail = false;
         public string MailSubject = "VisualTestResultMail";
 
+        //ImageShowingDifferenceNumbers
+        public bool CreateImageShowingDifferencePixelPoints = true;
+        public bool InsertImageInMail = true;
+        public string ShowImageDifferencePointsImageDir = Environment.CurrentDirectory;
 
         /// <summary>
         /// Only show images that is compared within a specified range in procent
         /// </summary>
         public bool OnlyShowImagesBelowTheSetProcentValue = false;
-        public bool OnlyShowImagesHigherThenTheSetProcentValue = false;
+        public bool OnlyShowImagesHigherThenTheSetProcentValue = true;
         public float ImagesProcentDifference = 95;
     }
 }

@@ -3,6 +3,7 @@ using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
@@ -26,13 +27,11 @@ namespace Ellegaard_VisualWebTestingTool
             {
                 Directory.CreateDirectory(testSection.ToString());
             }
-
             testSection.Append("\\" + testSectionName);
             if (!Directory.Exists(testSection.ToString()))
             {
                 Directory.CreateDirectory(testSection.ToString());
             }
-
             testSection.Append("\\");
             this.imageSavePath = testSection.ToString();
         }
@@ -121,8 +120,30 @@ namespace Ellegaard_VisualWebTestingTool
 
         public byte[] CaptureDriverWebImage(IWebDriver driver, string testName)
         {
-            ((ITakesScreenshot)driver).GetScreenshot().SaveAsFile(imageSavePath + testName + "\\WebImage\\CapturedWebImage", settings.ImagesFormat);
-            byte[] screenshot = File.ReadAllBytes(imageSavePath + testName + "\\WebImage\\CapturedWebImage");
+            ((ITakesScreenshot)driver).GetScreenshot().SaveAsFile(imageSavePath + testName + "\\WebImage\\CapturedWebImage.bmp", settings.ImagesFormat);
+            byte[] screenshot = File.ReadAllBytes(imageSavePath + testName + "\\WebImage\\CapturedWebImage.bmp");
+            //Billed dimensonierne ganget og ganget med dybden trukket fra antal total bit filen fylder.
+            //Dette er til testing
+            //int test = 33;
+            //Thread.Sleep(1);
+            //for (int i = 0; i < 20; i++)
+            //{
+            //    var a = (byte[])screenshot.Clone();
+            //    for (int y = test; y < screenshot.Length; y++)
+            //    {
+            //        a[y] = 0;
+            //    }
+            //    for (int x = test; x < screenshot.Length; x += 4)
+            //    {
+            //        a[x] = 255;
+            //    }
+            //    File.WriteAllBytes(imageSavePath + testName + "\\WebImage\\FullScreenTestImage" + test + ".bmp", a);
+            //    test++;
+            //    Thread.Sleep(1);
+            //}
+            
+            //Dette er til testing
+
             return screenshot;
         }
 
@@ -132,26 +153,28 @@ namespace Ellegaard_VisualWebTestingTool
 
         void CompareImages(byte[] siteImage, Dictionary<string, byte[]> localImages, string testName)
         {
-            ImageResults results = new ImageResults();            
+            ImageResults results = new ImageResults();
             results.testResults = new Dictionary<string, float>();
             results.testName = testName;
             results.testSectionName = testSectionName;
-
-            foreach (var imageBytes in localImages)
+            try
             {
-                float totalCounter = (siteImage.Length + imageBytes.Value.Length) / 2;
-                int counter = 0;
-                var equals = 0;
-                foreach (var imageByte in imageBytes.Value)
+                foreach (var imageBytes in localImages)
                 {
-                    if (siteImage[counter].Equals(imageByte))   { equals++; }
-                    else{ siteImage[counter] = 0; }
-                    counter++;
+                    float totalCounter = ((siteImage.Length + imageBytes.Value.Length) / 2) - 35;
+                    if (siteImage.Length != imageBytes.Value.Length) Console.WriteLine("Warning the image taken from the site, and the local images are a different resolution, this can a negative impact on the results");
+                    var equals = 0;
+                    for (int i = 34; i < totalCounter; i++)
+                    {
+                        if (siteImage[i].Equals(imageBytes.Value[i])) { equals++; }
+                    }
+                    float procent = (equals / totalCounter) * 100;
+                    results.testResults.Add(imageBytes.Key, procent);
                 }
-                counter = 0;
-                float procent = (equals / totalCounter) * 100;
-                results.testResults.Add(imageBytes.Key, procent);
-                results.showPictureDifferencesInBytes = siteImage;
+            }
+            catch (Exception)
+            {
+                throw new Exception("The dimensions are different on the local image file, from the and the image taken");
             }
             PrintOutResults.Instance().testResults.Add(results);
         }
