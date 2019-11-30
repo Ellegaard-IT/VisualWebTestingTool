@@ -26,14 +26,14 @@ namespace Ellegaard_VisualWebTestingTool
 
         //ImageShowingDifferenceNumbers
         public bool CreateImageShowingDifferencePixelPoints = true;
-        public bool InsertImageInMail = true;
+        public bool InsertImageInMail = false;
         public string ShowImageDifferencePointsImageDir = Environment.CurrentDirectory;
 
         /// <summary>
         /// Only show images that is compared within a specified range in procent
         /// </summary>
-        public bool OnlyShowImagesBelowTheSetProcentValue = false;
-        public bool OnlyShowImagesHigherThenTheSetProcentValue = true;
+        public bool OnlyShowImagesBelowTheSetProcentValue = true;
+        public bool OnlyShowImagesHigherThenTheSetProcentValue = false;
         public float ImagesProcentDifference = 95;
     }
 }
