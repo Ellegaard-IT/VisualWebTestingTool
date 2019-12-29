@@ -14,19 +14,22 @@ namespace VisualWebTestingToolTester
     public class VisualTesting
     {
         IWebDriver driver;
+        VisualTest test;
 
         [TestInitialize]
         public void StartUp()
         {
             driver = new FirefoxDriver(Environment.CurrentDirectory);
+            test = new VisualTest("TestSection");
         }
 
         [TestMethod]
         public void TestMethod1()
         {
             driver.Navigate().GoToUrl("https://wpsites.net/wordpress-tips/how-slow-page-loading-times-decrease-page-views/");
-            VisualTest test = new VisualTest("TestSection");
+            
             test.RunTest(driver,"myTestImages");
+
             VisualTest test2 = new VisualTest("Test2");
             test2.RunTest(driver, "hisTestImages");
             test.RunTest(driver, "theirTestImages");
