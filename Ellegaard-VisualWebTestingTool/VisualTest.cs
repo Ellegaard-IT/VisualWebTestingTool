@@ -37,8 +37,9 @@ namespace Ellegaard_VisualWebTestingTool
             this.imageSavePath = testSection.ToString();
         }
 
-        public void RunTest(IWebDriver driver, string testName)
+        public void RunTest(IWebDriver driver, string testName, [Optional] Settings settings)
         {
+            if (settings == null) settings = new Settings();
             if (!Directory.Exists(imageSavePath+testName))
             {
                 PrintOutResults.Instance().logs.Add("" + testName + " didnt exist, a test case have bin created for future test cases in section "+testSectionName);
@@ -47,7 +48,7 @@ namespace Ellegaard_VisualWebTestingTool
             var imageBytesSavedImages = LoadTestImages(testName);
             LoadPage(driver);
             byte[] screenshotBytes = CaptureDriverWebImage(driver,testName);
-            CompareImages(screenshotBytes, imageBytesSavedImages, testName);
+            CompareImages(screenshotBytes, imageBytesSavedImages, testName, settings);
         }
 
         #region CreateTests
@@ -73,7 +74,7 @@ namespace Ellegaard_VisualWebTestingTool
             Directory.CreateDirectory(saveUrl+"\\WebImage");
             foreach (var screenshot in screenshotList)
             {
-                screenshot.SaveAsFile(saveUrl + "\\" + testName + counter, settings.ImagesFormat);
+                screenshot.SaveAsFile(saveUrl + "\\" + testName + counter+".bmp", settings.ImagesFormat);
                 counter++;
             }
         }
@@ -130,29 +131,65 @@ namespace Ellegaard_VisualWebTestingTool
         
         #region ImageComparison
 
-        void CompareImages(byte[] siteImage, Dictionary<string, byte[]> localImages, string testName)
+        void CompareImages(byte[] siteImage, Dictionary<string, byte[]> localImages, string testName, Settings settings)
         {
-            ImageResults results = new ImageResults();            
+            ImageResults results = new ImageResults();
+            List<int> redNumbers = new List<int>();
             results.testResults = new Dictionary<string, float>();
             results.testName = testName;
             results.testSectionName = testSectionName;
+            float totalCounter = 0;
+            float toManyPixelsCounter = 0;
 
+            for (int i = 36; i < siteImage.Length; i+=4)
+            {
+                redNumbers.Add(i);
+            }
             foreach (var imageBytes in localImages)
             {
-                float totalCounter = (siteImage.Length + imageBytes.Value.Length) / 2;
-                int counter = 0;
+                if (siteImage.Length > imageBytes.Value.Length) { totalCounter = imageBytes.Value.Length; toManyPixelsCounter = siteImage.Length - imageBytes.Value.Length; Warning(results); }
+                else if (siteImage.Length < imageBytes.Value.Length) { totalCounter = siteImage.Length; toManyPixelsCounter = imageBytes.Value.Length - siteImage.Length; Warning(results); }
+                else { totalCounter = ((siteImage.Length + imageBytes.Value.Length) / 2); }
                 var equals = 0;
-                foreach (var imageByte in imageBytes.Value)
+                for (int i = 34; i < totalCounter; i++)
                 {
-                    if (siteImage[counter].Equals(imageByte))   { equals++; }
-                    else{ siteImage[counter] = 0; }
-                    counter++;
+                    if (siteImage[i].Equals(imageBytes.Value[i])) { equals++; }
                 }
-                counter = 0;
-                float procent = (equals / totalCounter) * 100;
+                float procent = (equals / (totalCounter - toManyPixelsCounter)) * 100;
                 results.testResults.Add(imageBytes.Key, procent);
-                results.showPictureDifferencesInBytes = siteImage;
             }
+
+            KeyValuePair<string, float> highestProcentImage = new KeyValuePair<string, float>("", 0);
+            foreach (var item in results.testResults)
+            {
+                if (item.Value > highestProcentImage.Value) highestProcentImage = new KeyValuePair<string, float>(item.Key, item.Value);
+            }
+            try
+            {
+                if (siteImage.Length > localImages[highestProcentImage.Key].Length) { totalCounter = localImages[highestProcentImage.Key].Length; }
+            }
+            catch (Exception){}
+            try
+            {
+                if (siteImage.Length < localImages[highestProcentImage.Key].Length) { totalCounter = siteImage.Length; }
+            }
+            catch (Exception){}
+            if(totalCounter == 0)totalCounter = ((siteImage.Length + localImages[highestProcentImage.Key].Length) / 2);
+
+
+            byte[] highestProcentImageBytes = localImages[highestProcentImage.Key];
+            for (int i = 34; i < totalCounter; i++)
+            {
+                if (siteImage[i] != highestProcentImageBytes[i] && redNumbers.Contains(i))
+                {
+                    siteImage[i - 2] = 0;//blue
+                    siteImage[i - 1] = 0;//green
+                    siteImage[i] = 255;//red
+                    siteImage[i + 1] = 0;//transparent
+                }
+            }
+            results.showPictureDifferencesInBytes = siteImage;
+
             PrintOutResults.Instance().testResults.Add(results);
         }
 
@@ -162,6 +199,11 @@ namespace Ellegaard_VisualWebTestingTool
         static void LoadPage(IWebDriver driver)
         {
             new WebDriverWait(driver, TimeSpan.FromSeconds(20)).Until(a => ((IJavaScriptExecutor)a).ExecuteScript("return document.readyState").Equals("complete"));
+        }
+
+        static void Warning(ImageResults result)
+        {
+            Console.WriteLine("Warning: Test pixels are not balanced and results may be effekted on section: {0}, testname: {1}", result.testSectionName, result.testName);
         }
         #endregion
     }

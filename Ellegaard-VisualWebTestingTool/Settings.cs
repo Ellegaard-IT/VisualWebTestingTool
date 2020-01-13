@@ -31,5 +31,10 @@ namespace Ellegaard_VisualWebTestingTool
         public bool OnlyShowImagesBelowTheSetProcentValue = false;
         public bool OnlyShowImagesHigherThenTheSetProcentValue = false;
         public float ImagesProcentDifference = 95;
+
+        ///<summary>
+        ///Create Image that shows where the difference is
+        /// </summary>
+        public bool createDifferenceImage = false;
     }
 }

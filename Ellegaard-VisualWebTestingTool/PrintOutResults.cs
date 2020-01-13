@@ -41,7 +41,6 @@ namespace Ellegaard_VisualWebTestingTool
         public void PrintToXML([Optional]Settings settings)
         {
             if (settings == null) { settings = new Settings(); }
-
             TestResultsSort(settings);
             var xmlDocument = CreateXmlElements();
 
@@ -93,6 +92,7 @@ namespace Ellegaard_VisualWebTestingTool
             if (settings == null) settings = new Settings();
             if (settings.IncludeXmlFileInMail) { PrintToXML(settings); mailAttachment = new Attachment(savepath); }
             else TestResultsSort(settings);
+            CreateImageCompareFiles(settings);
             string mailBody = CreateMailBody();
 
             foreach (var mail in mailTo)
@@ -188,7 +188,24 @@ namespace Ellegaard_VisualWebTestingTool
             }
             return myDocument.ToString();
         }
+
+        #region TestImageDifferences
+
+        void CreateImageCompareFiles(Settings settings)
+        {
+            var dir = settings.TestDataSavePath + "\\ShowingDifferenceImages";
+            if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);            
+
+            foreach (var item in testResults)
+            {
+                if (!Directory.Exists(dir + "\\" + item.testSectionName)) Directory.CreateDirectory(dir + "\\" + item.testSectionName);
+                File.OpenWrite(dir + "\\" + item.testSectionName + "\\" + item.testName + ".bmp").Write(item.showPictureDifferencesInBytes, 0, item.showPictureDifferencesInBytes.Length);
+            }
+        }
+
+        #endregion
     }
+
     struct ImageResults
     {
         public string testSectionName { get; set; }
