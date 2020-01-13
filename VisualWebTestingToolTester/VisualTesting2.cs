@@ -27,6 +27,7 @@ namespace VisualWebTestingToolTester
         public void TestMethod1()
         {
             settings.IncludeXmlFileInMail = true;
+            settings.IncludeDifferenceImageInMail = true;
             driver.Navigate().GoToUrl("https://wpsites.net/wordpress-tips/how-slow-page-loading-times-decrease-page-views/");
             VisualTest test = new VisualTest("TestSectionInClass2");
             test.RunTest(driver, "myTestImagesInClass2");

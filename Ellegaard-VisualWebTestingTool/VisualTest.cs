@@ -39,6 +39,7 @@ namespace Ellegaard_VisualWebTestingTool
 
         public void RunTest(IWebDriver driver, string testName, [Optional] Settings settings)
         {
+            driver.Manage().Window.FullScreen();
             if (settings == null) settings = new Settings();
             if (!Directory.Exists(imageSavePath+testName))
             {

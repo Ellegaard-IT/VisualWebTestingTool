@@ -22,6 +22,7 @@ namespace Ellegaard_VisualWebTestingTool
 
         //Mail settings
         public bool IncludeXmlFileInMail = false;
+        public bool IncludeDifferenceImageInMail = false;
         public string MailSubject = "VisualTestResultMail";
 
 
@@ -31,10 +32,5 @@ namespace Ellegaard_VisualWebTestingTool
         public bool OnlyShowImagesBelowTheSetProcentValue = false;
         public bool OnlyShowImagesHigherThenTheSetProcentValue = false;
         public float ImagesProcentDifference = 95;
-
-        ///<summary>
-        ///Create Image that shows where the difference is
-        /// </summary>
-        public bool createDifferenceImage = false;
     }
 }
