@@ -41,7 +41,6 @@ namespace Ellegaard_VisualWebTestingTool
         public void PrintToXML([Optional]Settings settings)
         {
             if (settings == null) { settings = new Settings(); }
-
             TestResultsSort(settings);
             var xmlDocument = CreateXmlElements();
 
@@ -87,13 +86,16 @@ namespace Ellegaard_VisualWebTestingTool
             return doc;
         }
 
-        public void SendResultsAsEmail(SmtpClient client, string[] mailTo, string mailFrom,[Optional]string subject,[Optional]Settings settings)
+        public void SendResultsAsEmail(SmtpClient client, string[] mailTo, string mailFrom, [Optional]string subject, [Optional]Settings settings)
         {
-            Attachment mailAttachment=null;
+            Attachment mailAttachment = null;
             if (settings == null) settings = new Settings();
             if (settings.IncludeXmlFileInMail) { PrintToXML(settings); mailAttachment = new Attachment(savepath); }
             else TestResultsSort(settings);
+            CreateImageCompareFiles(settings);
             string mailBody = CreateMailBody();
+            
+            
 
             foreach (var mail in mailTo)
             {
@@ -101,7 +103,22 @@ namespace Ellegaard_VisualWebTestingTool
                 MailAddress addressTo = new MailAddress(mail);
                 MailMessage message = new MailMessage(addressFrom, addressTo);
                 if (mailAttachment != null && settings.IncludeXmlFileInMail) message.Attachments.Add(mailAttachment);
-                message.Subject = subject??settings.MailSubject;                
+                
+                if (settings.IncludeDifferenceImageInMail)
+                {
+                    List<string> imageUrls = new List<string>();
+                    foreach (var testResult in testResults)
+                    {
+                        foreach (var image in Directory.GetFiles(settings.TestDataSavePath + "\\ShowingDifferenceImages\\" + testResult.testSectionName))
+                        {
+                            message.Attachments.Add(new Attachment(image));
+                            break;
+                        }
+                        break;
+                    }
+                }
+
+                message.Subject = subject??settings.MailSubject;
                 message.Body = mailBody;
                 message.IsBodyHtml = true;
                 client.Send(message);
@@ -188,7 +205,26 @@ namespace Ellegaard_VisualWebTestingTool
             }
             return myDocument.ToString();
         }
+
+        #region TestImageDifferences
+
+        void CreateImageCompareFiles(Settings settings)
+        {
+            var dir = settings.TestDataSavePath + "\\ShowingDifferenceImages";
+            if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);            
+
+            foreach (var item in testResults)
+            {
+                if (!Directory.Exists(dir + "\\" + item.testSectionName)) Directory.CreateDirectory(dir + "\\" + item.testSectionName);
+                var file = File.OpenWrite(dir + "\\" + item.testSectionName + "\\" + item.testName + ".bmp");
+                file.Write(item.showPictureDifferencesInBytes, 0, item.showPictureDifferencesInBytes.Length);
+                file.Close();
+            }
+        }
+
+        #endregion
     }
+
     struct ImageResults
     {
         public string testSectionName { get; set; }

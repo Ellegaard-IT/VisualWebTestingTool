@@ -22,6 +22,7 @@ namespace Ellegaard_VisualWebTestingTool
 
         //Mail settings
         public bool IncludeXmlFileInMail = false;
+        public bool IncludeDifferenceImageInMail = false;
         public string MailSubject = "VisualTestResultMail";
 
 

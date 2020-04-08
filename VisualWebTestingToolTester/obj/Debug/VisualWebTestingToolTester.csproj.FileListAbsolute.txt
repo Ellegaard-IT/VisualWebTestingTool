@@ -29,6 +29,6 @@ A:\Reps\Ellegaard-VisualWebTestingTool\VisualWebTestingToolTester\bin\Debug\WebD
 A:\Reps\Ellegaard-VisualWebTestingTool\VisualWebTestingToolTester\obj\Debug\VisualWebTestingToolTester.csproj.CopyComplete
 A:\Reps\Ellegaard-VisualWebTestingTool\VisualWebTestingToolTester\obj\Debug\VisualWebTestingToolTester.dll
 A:\Reps\Ellegaard-VisualWebTestingTool\VisualWebTestingToolTester\obj\Debug\VisualWebTestingToolTester.pdb
-A:\Reps\Ellegaard-VisualWebTestingTool\VisualWebTestingToolTester\obj\Debug\VisualWebTestingToolTester.csprojAssemblyReference.cache
 C:\Speciale-reps\Ellegaard-VisualWebTestingTool\VisualWebTestingToolTester\bin\Debug\Ellegaard-VisualWebTestingTool.dll
 A:\Reps\Ellegaard-VisualWebTestingTool\VisualWebTestingToolTester\bin\Debug\Ellegaard-VisualWebTestingTool.dll
+A:\Reps\Ellegaard-VisualWebTestingTool\VisualWebTestingToolTester\obj\Debug\VisualWebTestingToolTester.csprojAssemblyReference.cache
