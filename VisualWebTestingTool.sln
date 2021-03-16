@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29409.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VisualWebTestingTool", "Ellegaard-VisualWebTestingTool\VisualWebTestingTool.csproj", "{63CA57C7-F728-47FB-8EE5-3F0704BAB08A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VisualWebTestingTool", "VisualWebTestingTool\VisualWebTestingTool.csproj", "{63CA57C7-F728-47FB-8EE5-3F0704BAB08A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualWebTestingToolTester", "VisualWebTestingToolTester\VisualWebTestingToolTester.csproj", "{B110764F-F989-46ED-82F3-FE1C79D67EFF}"
 EndProject
