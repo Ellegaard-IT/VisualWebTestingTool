@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Ellegaard_VisualWebTestingTool;
+using VisualWebTestingTool;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
@@ -36,8 +36,12 @@ namespace VisualWebTestingToolTester
             VisualTest test2 = new VisualTest("Test2InClass2");
             test2.RunTest(driver, "hisTestImagesInClass2");
             test.RunTest(driver, "theirTestImagesInClass2");
-            var a = new string[] { "Morten_hansen51@yahoo.dk" };
-            PrintOutResults.Instance().SendResultsAsEmail(MailTest(),a,"VisualTestingTool@ellegaard-it.com", null, settings) ;
+            var RecieverEmails = new string[] { "Morten_hansen51@yahoo.dk" };
+
+
+            PrintOutResults.Instance().PrintToXML(settings);
+
+            //PrintOutResults.Instance().SendResultsAsEmail(MailTest(),RecieverEmails,"SenderEmail", null, settings) ;
         }
 
         [TestCleanup]
@@ -45,6 +49,8 @@ namespace VisualWebTestingToolTester
         {
             driver.Close();
         }
+
+
 
         public SmtpClient MailTest()
         {

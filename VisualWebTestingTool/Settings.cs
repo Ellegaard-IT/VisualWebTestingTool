@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Ellegaard_VisualWebTestingTool
+namespace VisualWebTestingTool
 {
     public class Settings
     {

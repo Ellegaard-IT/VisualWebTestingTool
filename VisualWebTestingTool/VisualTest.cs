@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 
-namespace Ellegaard_VisualWebTestingTool
+namespace VisualWebTestingTool
 {
     public class VisualTest
     {

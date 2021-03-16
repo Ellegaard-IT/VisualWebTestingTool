@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 using System.Xml;
 using System.Xml.Linq;
 
-namespace Ellegaard_VisualWebTestingTool
+namespace VisualWebTestingTool
 {
     public class PrintOutResults
     {
