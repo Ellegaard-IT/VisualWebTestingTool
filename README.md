@@ -1,1 +1,1 @@
-# Ellegaard-VisualWebTestingTool
+# VisualWebTestingTool
