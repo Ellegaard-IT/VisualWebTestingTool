@@ -123,8 +123,8 @@ namespace VisualWebTestingTool
 
         public byte[] CaptureDriverWebImage(IWebDriver driver, string testName)
         {
-            ((ITakesScreenshot)driver).GetScreenshot().SaveAsFile(imageSavePath + testName + "\\WebImage\\CapturedWebImage", settings.ImagesFormat);
-            byte[] screenshot = File.ReadAllBytes(imageSavePath + testName + "\\WebImage\\CapturedWebImage");
+            ((ITakesScreenshot)driver).GetScreenshot().SaveAsFile(imageSavePath + testName + "\\WebImage\\CapturedWebImage.png", settings.ImagesFormat);
+            byte[] screenshot = File.ReadAllBytes(imageSavePath + testName + "\\WebImage\\CapturedWebImage.png");
             return screenshot;
         }
 
