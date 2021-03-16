@@ -26,8 +26,10 @@ namespace VisualWebTestingToolTester
         [TestMethod]
         public void TestMethod1()
         {
+            //Set settings
             settings.IncludeXmlFileInMail = true;
             settings.IncludeDifferenceImageInMail = true;
+
             driver.Navigate().GoToUrl("https://wpsites.net/wordpress-tips/how-slow-page-loading-times-decrease-page-views/");
             VisualTest test = new VisualTest("TestSectionInClass2");
             test.RunTest(driver, "myTestImagesInClass2");
@@ -47,10 +49,10 @@ namespace VisualWebTestingToolTester
         public SmtpClient MailTest()
         {
             var credentials = new NetworkCredential();
-            credentials.UserName = "donotrply@ellegaard-it.com";
-            credentials.Password = "T6iM2KCX9RaKYwv";
+            credentials.UserName = "SMTPserverUser";
+            credentials.Password = "SMPTPserverPassword";
 
-            SmtpClient smtp = new SmtpClient("asmtp.unoeuro.com", 25);
+            SmtpClient smtp = new SmtpClient("ServerAddress", 25);
             smtp.Credentials = credentials;
             smtp.EnableSsl = true;
             smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
